@@ -1,9 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import ReactFlow, { ReactFlowProvider, addEdge, useNodesState, useEdgesState, Controls } from 'react-flow-renderer';
-// import Canvas from './Offcanvas';
 
-// import React, { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FillerNodeForm from "./FillerNodeForm"
 
@@ -34,18 +31,10 @@ const Middle = () => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    // const [showCanvas, setShowCanvas] = useState(false);
-
-    // const handleCloseCanvas = () => setShow(false);
-    // const handleShowCanvas = () => setShow(true);
-
-    const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds), console.log(params)), []);
+    const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
     const onDragOver = useCallback((event) => {
         event.preventDefault();
-        // console.log(event.clientX, event.clientY)
-        // console.log(event)
         event.dataTransfer.dropEffect = 'move';
     }, []);
 
@@ -64,8 +53,6 @@ const Middle = () => {
             x: event.clientX - reactFlowBounds.left,
             y: event.clientY - reactFlowBounds.top,
         });
-        // console.log(reactFlowBounds.left)
-        // console.log(event.clientX)
 
         const newNode = {
             id: getId(),
@@ -83,8 +70,9 @@ const Middle = () => {
         [reactFlowInstance]
     );
 
+
+
     const onNodeDoubleClick = (event, node) => {
-        console.log(node)
         setOffCanvasData(node)
         toggleFalseTrue()
     }
@@ -93,16 +81,17 @@ const Middle = () => {
         setShowOffcanvas(handleShow)
     }
 
+
     const OffcanvasContent = () => {
+        const nodeData = offCanvasData
         return (
             <>
-
                 <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton>
                         <Offcanvas.Title>Offcanvas</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        <FillerNodeForm>
+                        <FillerNodeForm nodeData={nodeData} edgeData={edges}>
 
                         </FillerNodeForm>
                     </Offcanvas.Body>

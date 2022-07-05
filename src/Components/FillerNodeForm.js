@@ -2,18 +2,23 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 
-const FillerNodeForm = () => {
+const FillerNodeForm = (nodeData, edgeData) => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = data => console.log(data);
-    // console.log(watch("example")); 
+
+    const onClick = () => {
+        console.log(nodeData)
+        console.log(edgeData)
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="col">
                     <label> Name of the filler node </label>
                     <input type="text" className="form-control" placeholder="filler node name" defaultValue="" {...register("node")} />
-                </div> 
+                </div>
 
                 <div className="col">
                     <label> Layer </label>
@@ -57,7 +62,7 @@ const FillerNodeForm = () => {
                     <label className="form-check-label" htmlFor="updates">send me latest Bootstrap updates</label>
                 </div>
 
-                <button type="submit" className="btn btn-success ms-5"> Done </button>
+                <button type="submit" onClick={onClick} className="btn btn-success ms-5"> Done </button>
                 <button type="submit" className="btn btn-warning m-1"> Cancle </button>
                 <button type="submit" className="btn btn-danger m-1"> Delete </button>
             </form>
